@@ -1,9 +1,9 @@
-package com.example.weis
+package com.example.weis.ui.activity.activity
 
-import android.os.Binder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
+import com.example.weis.R
 import com.example.weis.databinding.ActivitySplashScreenBinding
 
 class SplashScreenActivity : AppCompatActivity() {
