@@ -13,10 +13,10 @@
         android:theme="@style/Theme.Weis"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activity.activity.SplashScreenActivity"
+            android:name=".ui.activity.SplashScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.activity.MainContainerActivity"
+            android:name=".ui.activity.MainContainerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
