@@ -98,7 +98,14 @@ class MainContainerActivity : AppCompatActivity() {
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                TODO("Not yet implemented")
+                tab?.let {
+                    val customTabView = it.customView
+                    val tabIconImageView = customTabView?.findViewById<ImageView>(R.id.tabIcon)
+                    val tabNameTextView = customTabView?.findViewById<TextView>(R.id.tabName)
+
+                    tabIconImageView?.setColorFilter(ContextCompat.getColor(this@MainContainerActivity, R.color.primaryColor))
+                    tabNameTextView?.setTextColor(ContextCompat.getColor(this@MainContainerActivity, R.color.primaryColor))
+                }
             }
 
         })

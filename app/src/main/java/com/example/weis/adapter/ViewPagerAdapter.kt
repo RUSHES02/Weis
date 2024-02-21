@@ -1,7 +1,6 @@
 package com.example.weis.adapter
 
 import android.graphics.drawable.Drawable
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -36,11 +35,6 @@ class ViewPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activi
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(activity)
 
-
-    fun getPageTitle(position: Int): String {
-        return fragmentTittle[position]
-    }
-
     fun getTabView(position: Int): View {
         val customTabView: View = layoutInflater.inflate(R.layout.tab_lay, null)
 
@@ -52,14 +46,5 @@ class ViewPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activi
         }
         tabNameTextView.text = fragmentTittle[position]
         return customTabView
-    }
-
-
-    fun getIconResId(position: Int): Drawable? {
-        return fragmentIconResIds[position]
-    }
-
-    fun getSelectedIconResId(position: Int): Drawable? {
-        return fragmentSelectedIconResIds[position]
     }
 }
