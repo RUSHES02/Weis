@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "878414644377",
+    "project_id": "weis-7a1e3",
+    "storage_bucket": "weis-7a1e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878414644377:android:f2f85ea4077faf7560e408",
+        "android_client_info": {
+          "package_name": "com.example.weis"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDDeNKMHD5UStr83iSdclxW636M3PJ-Wk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
