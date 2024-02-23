@@ -20,4 +20,18 @@ class FocusFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val childFragmentManager = childFragmentManager
+
+        val nestedFragment = StartMusicFragment()
+        childFragmentManager.beginTransaction()
+            .replace(R.id.frameFocus, nestedFragment)
+            .commit()
+    }
+
+//    interface OnNestedFragmentInteractionListener {
+//        fun onInteraction(data: String)
+//    }
+//
+
 }
