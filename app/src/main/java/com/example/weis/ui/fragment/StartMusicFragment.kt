@@ -28,7 +28,7 @@ class StartMusicFragment : Fragment() {
             val newFragment = PlayFragment()
             val fragmentManager = parentFragmentManager
             val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.frameFocus, newFragment)
+            transaction.replace(R.id.fragContFocus, newFragment)
             transaction.addToBackStack(null)
             transaction.commit()
         }
