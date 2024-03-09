@@ -7,15 +7,16 @@
     <string name="goals">Goals</string>
     <string name="please_plug_in_your_headphones">Please Plug in your Headphones</string>
     <string name="statistics">Statistics</string>
+    <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="don_t_have_an_account">Don\'t have an account ?</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="with_google">with google</string>
     <string name="name">Name</string>
+    <string name="don_t_have_an_account">Don\'t have an account ?</string>
+    <string name="already_have_an_account">Already have an account ?</string>
+    <string name="with_google">with google</string>
 
-    <string name="google_btn_text">%1$s %2$s</string>
-
+    <string name="concat">%1$s %2$s</string>
+    <string name="web_client_id">878414644377-58r8hrqe58ve7rmv4piljattuuct1b6a.apps.googleusercontent.com</string>
 
 </resources>

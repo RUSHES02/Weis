@@ -133,6 +133,7 @@
                 android:text="@string/with_google"
                 android:textColor="@color/white"
                 android:textSize="22sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/gdlineLoginBottom"
                 app:layout_constraintEnd_toStartOf="@+id/gdlineLoginRight"
                 app:layout_constraintStart_toStartOf="@+id/gdlineLoginLeft" />

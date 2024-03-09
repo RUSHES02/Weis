@@ -1,5 +1,6 @@
 package com.example.weis.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -8,9 +9,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.weis.R
 import com.example.weis.databinding.FragmentRegistrationBinding
 import com.example.weis.modals.User
+import com.example.weis.ui.activity.MainContainerActivity
+import com.example.weis.utils.StoreUser
+import com.example.weis.viewModel.UserViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+//import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,8 +30,12 @@ import java.util.regex.Pattern
 class RegistrationFragment : Fragment() {
 
     private lateinit var  binding : FragmentRegistrationBinding
-    private lateinit var  firebaseAuth : FirebaseAuth
     private lateinit var deRef : CollectionReference
+
+    private lateinit var  firebaseAuth : FirebaseAuth
+    private lateinit var mGoogleSignInClient: GoogleApiClient
+    private val RC_SIGN_IN = 9001 // Request code for the sign-in intent.
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,22 +49,37 @@ class RegistrationFragment : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
         deRef = FirebaseFirestore.getInstance().collection("User")
 
-        binding.btnGoogleSignUp.text = getString(R.string.google_btn_text, getString(R.string.sign_up), getString(R.string.with_google))
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .requestIdToken(getString(R.string.web_client_id))
+            .requestProfile()
+            .build()
+
+//        mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+//        mGoogleSignInClient = Goo.
+
+        binding.btnGoogleSignUp.text = getString(R.string.concat, getString(R.string.sign_up), getString(R.string.with_google))
         var user : User
 
         binding.btnSignUp.setOnClickListener{
             user = User(
                 email = binding.editTextEmail.text.toString(),
                 name = binding.editTextName.text.toString(),
-                password = binding.editTextPass.text.toString()
+                password = binding.editTextPass.text.toString(),
+                picture = null
             )
             if(validateField(user)) registerUser(user)
+        }
+
+        binding.btnGoogleSignUp.setOnClickListener{
+//            signIn()
         }
     }
 
     private fun validateField(user: User): Boolean {
-        if(user.name.isNotEmpty() && user.email.isNotEmpty() && user.password.isNotEmpty()) {
-            user.name.forEach{char ->
+        if(user.name?.isNotEmpty() == true && user.email.isNotEmpty() && user.password.isNotEmpty()) {
+            user.name?.forEach{ char ->
                 if (char.isDigit()){
                     Log.d("name", " has digit $char")
                     binding.editTextName.error = "Invalid Username"
@@ -79,15 +109,59 @@ class RegistrationFragment : Fragment() {
                 binding.editTextName.setText("")
                 binding.editTextEmail.setText("")
                 binding.editTextPass.setText("")
+
+                deRef.document(user.email).set(mapOf("name" to user.name))
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Firestore Successfully", Toast.LENGTH_SHORT).show()
+                    }.addOnFailureListener {
+                        Toast.makeText(context, "firestore Failed", Toast.LENGTH_SHORT).show()
+                    }
+                StoreUser.saveData(user, requireActivity())
+                val intent = Intent(requireActivity(), MainContainerActivity::class.java)
+                startActivity(intent)
             }.addOnFailureListener {
                 Toast.makeText(context, "Register Failed", Toast.LENGTH_SHORT).show()
             }
-
-        deRef.document(user.email).set(mapOf("name" to user.name))
-            .addOnSuccessListener {
-                Toast.makeText(context, "Firestore Successfully", Toast.LENGTH_SHORT).show()
-            }.addOnFailureListener {
-                Toast.makeText(context, "firestore Failed", Toast.LENGTH_SHORT).show()
-            }
     }
+
+//    private fun signIn() {
+//        val signInIntent = mGoogleSignInClient.signInIntent
+//        startActivityForResult(signInIntent, RC_SIGN_IN)
+//    }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (requestCode == RC_SIGN_IN) {
+//            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+//            handleSignInResult(task)
+//        }
+//    }
+//
+//    private fun handleSignInResult(completedTask: Task<com.google.android.gms.auth.api.signin.GoogleSignInAccount>) {
+//        try {
+//            val account = completedTask.getResult(ApiException::class.java)
+//            // Signed in successfully, handle account data (e.g., send it to your server)
+//            updateUI(account)
+//        } catch (e: ApiException) {
+//            // The ApiException status code indicates the detailed failure reason.
+//            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+//            Log.w("google", "signInResult:failed code=" + e.statusCode)
+//            updateUI(null)
+//        }
+//    }
+//
+//    private fun updateUI(account: com.google.android.gms.auth.api.signin.GoogleSignInAccount?) {
+//        // Handle the UI update after sign-in (e.g., update UI elements, navigate to the next screen)
+//        if (account != null) {
+//            // Successful sign-in, you can use account information
+//            val displayName = account.displayName
+//            val email = account.email
+//            // ...
+//
+//            Log.d("creds", "$displayName, $email")
+//        } else {
+//            // Sign-in failed
+//        }
+//    }
 }

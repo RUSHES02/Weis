@@ -19,11 +19,12 @@
             android:name=".ui.activity.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.SplashScreenActivity"
+            android:name=".ui.activity.RegLoginContActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.RegLoginContActivity"
-            android:exported="true">
+            android:name=".ui.activity.WelcomeScreenActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Weis">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
