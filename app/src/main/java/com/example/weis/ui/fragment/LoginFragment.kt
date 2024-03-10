@@ -13,11 +13,9 @@ import com.example.weis.ui.activity.MainContainerActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import com.example.weis.utils.StoreUser
 import com.example.weis.viewModel.UserViewModel
-import com.google.gson.Gson
 
 class LoginFragment : Fragment() {
 

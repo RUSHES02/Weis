@@ -1,27 +1,21 @@
 package com.example.weis.ui.fragment
 
+//import com.google.android.gms.auth.api.signin.GoogleSignInClient
+//import com.google.android.gms.common.api.GoogleApiClient
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
 import com.example.weis.R
 import com.example.weis.databinding.FragmentRegistrationBinding
 import com.example.weis.modals.User
 import com.example.weis.ui.activity.MainContainerActivity
 import com.example.weis.utils.StoreUser
-import com.example.weis.viewModel.UserViewModel
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-//import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -33,8 +27,6 @@ class RegistrationFragment : Fragment() {
     private lateinit var deRef : CollectionReference
 
     private lateinit var  firebaseAuth : FirebaseAuth
-    private lateinit var mGoogleSignInClient: GoogleApiClient
-    private val RC_SIGN_IN = 9001 // Request code for the sign-in intent.
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,12 +41,12 @@ class RegistrationFragment : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
         deRef = FirebaseFirestore.getInstance().collection("User")
 
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .requestIdToken(getString(R.string.web_client_id))
-            .requestProfile()
-            .build()
+//
+//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//            .requestEmail()
+//            .requestIdToken(getString(R.string.web_client_id))
+//            .requestProfile()
+//            .build()
 
 //        mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
 //        mGoogleSignInClient = Goo.
@@ -79,7 +71,7 @@ class RegistrationFragment : Fragment() {
 
     private fun validateField(user: User): Boolean {
         if(user.name?.isNotEmpty() == true && user.email.isNotEmpty() && user.password.isNotEmpty()) {
-            user.name?.forEach{ char ->
+            user.name.forEach{ char ->
                 if (char.isDigit()){
                     Log.d("name", " has digit $char")
                     binding.editTextName.error = "Invalid Username"

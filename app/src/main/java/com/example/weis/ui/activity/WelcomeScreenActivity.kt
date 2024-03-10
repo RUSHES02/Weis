@@ -48,6 +48,6 @@ class WelcomeScreenActivity : AppCompatActivity() {
                 }
             }
 
-        }, 2000)
+        }, 1000)
     }
 }
