@@ -15,6 +15,7 @@ import com.example.weis.R
 import com.example.weis.databinding.FragmentRegistrationBinding
 import com.example.weis.modals.User
 import com.example.weis.ui.activity.MainContainerActivity
+import com.example.weis.utils.CheckNetwork
 import com.example.weis.utils.StoreUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -55,13 +56,18 @@ class RegistrationFragment : Fragment() {
         var user : User
 
         binding.btnSignUp.setOnClickListener{
-            user = User(
-                email = binding.editTextEmail.text.toString(),
-                name = binding.editTextName.text.toString(),
-                password = binding.editTextPass.text.toString(),
-                picture = null
-            )
-            if(validateField(user)) registerUser(user)
+            if(CheckNetwork.isInternetAvailable(requireActivity())){
+                user = User(
+                    email = binding.editTextEmail.text.toString(),
+                    name = binding.editTextName.text.toString(),
+                    password = binding.editTextPass.text.toString(),
+                    picture = null
+                )
+                if(validateField(user)) registerUser(user)
+            }else{
+                Toast.makeText(context, "No Internet", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         binding.btnGoogleSignUp.setOnClickListener{
@@ -71,7 +77,7 @@ class RegistrationFragment : Fragment() {
 
     private fun validateField(user: User): Boolean {
         if(user.name?.isNotEmpty() == true && user.email.isNotEmpty() && user.password.isNotEmpty()) {
-            user.name.forEach{ char ->
+            user.name!!.forEach{ char ->
                 if (char.isDigit()){
                     Log.d("name", " has digit $char")
                     binding.editTextName.error = "Invalid Username"

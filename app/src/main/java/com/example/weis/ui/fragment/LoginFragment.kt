@@ -2,6 +2,7 @@ package com.example.weis.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import androidx.lifecycle.ViewModelProvider
+import com.example.weis.utils.CheckNetwork
 import com.example.weis.utils.StoreUser
 import com.example.weis.viewModel.UserViewModel
 
@@ -38,13 +40,18 @@ class LoginFragment : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
         dbRef = FirebaseFirestore.getInstance().collection("User")
         binding.btnSignIn.setOnClickListener{
-            user = User(
-                email = binding.editTextEmail.text.toString().trim(),
-                password = binding.editTextPass.text.toString(),
-                name = null,
-                picture = null
-            )
-            loginUser(user)
+            if(CheckNetwork.isInternetAvailable(requireActivity())){
+                user = User(
+                    email = binding.editTextEmail.text.toString().trim(),
+                    password = binding.editTextPass.text.toString(),
+                    name = null,
+                    picture = null
+                )
+                loginUser(user)
+            }else{
+                Toast.makeText(context, "No Internet", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
     }
@@ -53,14 +60,13 @@ class LoginFragment : Fragment() {
     private fun loginUser(user: User){
         firebaseAuth.signInWithEmailAndPassword(user.email, user.password)
             .addOnSuccessListener {
-                Toast.makeText(context, "Register Successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Login Successfully", Toast.LENGTH_SHORT).show()
                 binding.editTextEmail.setText("")
                 binding.editTextPass.setText("")
                 getUserDetails(user.email)
-                val intent = Intent(requireActivity(), MainContainerActivity::class.java)
-                startActivity(intent)
+
             }.addOnFailureListener {
-                Toast.makeText(context, "Register Failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -68,11 +74,14 @@ class LoginFragment : Fragment() {
         dbRef.document(email).get()
             .addOnSuccessListener{document ->
                 if (document.exists()) {
+                    Log.d("fetched user", document.toString())
                     val userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
                     val userModel = userViewModel.convertToUserModel(document)
                     StoreUser.saveData(userModel, requireActivity())
+                    val intent = Intent(requireActivity(), MainContainerActivity::class.java)
+                    startActivity(intent)
                 } else {
-                    println("No such document")
+                    Log.d("fetched user", "falied")
                 }
             }
     }

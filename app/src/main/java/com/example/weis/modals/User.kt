@@ -1,9 +1,10 @@
 package com.example.weis.modals
 
+import android.net.Uri
+
 data class User(
-    val id: String? = null,
-    val name: String?,
+    var name: String?,
     val email: String,
     val password: String,
-    val picture: String?
+    var picture: String?
 )

@@ -13,6 +13,6 @@ class UserViewModel: ViewModel() {
         val password = document.getString("password") ?: ""
         val picture = document.getString("picture") ?: ""
 
-        return User(id, name, email, password, picture)
+        return User(name, email, password, picture)
     }
 }
