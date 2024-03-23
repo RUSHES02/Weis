@@ -1,4 +1,4 @@
-package com.example.weis.ui.fragment
+package com.example.weis.ui.fragment.musicFragments
 
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +16,7 @@ class StartMusicFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentStartMusicBinding.inflate(inflater, container, false)
         return binding.root

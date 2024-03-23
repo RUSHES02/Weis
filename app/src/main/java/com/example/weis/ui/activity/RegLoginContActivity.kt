@@ -4,12 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import com.example.weis.utils.LogReg
+import com.example.weis.ui.fragment.loginRegistration.LoginFragment
+import com.example.weis.ui.fragment.loginRegistration.RegistrationFragment
 import com.example.weis.R
 import com.example.weis.databinding.ActivityRegLoginContBinding
-import com.example.weis.ui.fragment.LoginFragment
-import com.example.weis.ui.fragment.RegistrationFragment
-import com.example.weis.utils.LogReg
 
 class RegLoginContActivity : AppCompatActivity() {
 

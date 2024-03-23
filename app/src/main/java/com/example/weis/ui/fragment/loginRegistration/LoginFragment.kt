@@ -1,4 +1,4 @@
-package com.example.weis.ui.fragment
+package com.example.weis.ui.fragment.loginRegistration
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,13 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.weis.databinding.FragmentLoginBinding
-import com.example.weis.modals.User
-import com.example.weis.ui.activity.MainContainerActivity
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import androidx.lifecycle.ViewModelProvider
+import com.example.weis.databinding.FragmentLoginBinding
+import com.example.weis.modals.User
+import com.example.weis.ui.activity.MainContainerActivity
 import com.example.weis.utils.CheckNetwork
 import com.example.weis.utils.StoreUser
 import com.example.weis.viewModel.UserViewModel

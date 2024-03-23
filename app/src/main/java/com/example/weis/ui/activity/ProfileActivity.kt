@@ -3,9 +3,7 @@ package com.example.weis.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -24,7 +22,6 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-
 import com.google.gson.Gson
 
 class ProfileActivity : AppCompatActivity() {
@@ -32,7 +29,6 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var binding : ActivityProfileBinding
     private lateinit var storageRef : StorageReference
     private lateinit var dbRef : CollectionReference
-    private var uri : Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -136,12 +132,12 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         binding.imgBtnBack.setOnClickListener{
-            finish()
+            super.onBackPressed()
         }
     }
 
     override fun getOnBackInvokedDispatcher(): OnBackInvokedDispatcher {
-        val resultIntent = Intent()
+        Intent()
         return super.getOnBackInvokedDispatcher()
     }
 

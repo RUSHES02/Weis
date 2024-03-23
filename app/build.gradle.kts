@@ -59,7 +59,7 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.firebase:firebase-auth:22.3.1")
-    implementation("org.jetbrains:annotations:15.0")
+    implementation("org.jetbrains:annotations:23.0.0")
     implementation("com.google.firebase:firebase-firestore:24.10.3")
     implementation("com.google.android.gms:play-services-auth:21.0.0")
     implementation("com.google.firebase:firebase-storage:20.3.0")
@@ -71,7 +71,7 @@ dependencies {
     //    implementation("com.android.support:support-v4:28.0.0")
 
     // Import the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation("com.google.firebase:firebase-analytics")
@@ -80,7 +80,7 @@ dependencies {
 
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
-    implementation ("com.google.code.gson:gson:2.10")
+    implementation ("com.google.code.gson:gson:2.10.1")
 
 //    implementation("androidx.core:core-splashscreen:1.0.1")
     implementation ("androidx.core:core-splashscreen:1.0.0-beta02")

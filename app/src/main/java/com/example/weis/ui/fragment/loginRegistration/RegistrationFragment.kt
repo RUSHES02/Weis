@@ -1,4 +1,4 @@
-package com.example.weis.ui.fragment
+package com.example.weis.ui.fragment.loginRegistration
 
 //import com.google.android.gms.auth.api.signin.GoogleSignInClient
 //import com.google.android.gms.common.api.GoogleApiClient
@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.weis.R
 import com.example.weis.databinding.FragmentRegistrationBinding
 import com.example.weis.modals.User
 import com.example.weis.ui.activity.MainContainerActivity
@@ -52,7 +51,6 @@ class RegistrationFragment : Fragment() {
 //        mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
 //        mGoogleSignInClient = Goo.
 
-        binding.btnGoogleSignUp.text = getString(R.string.concat, getString(R.string.sign_up), getString(R.string.with_google))
         var user : User
 
         binding.btnSignUp.setOnClickListener{

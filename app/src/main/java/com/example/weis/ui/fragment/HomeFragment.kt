@@ -22,8 +22,8 @@ import com.google.gson.Gson
 class HomeFragment : Fragment() {
 
     private lateinit var binding : FragmentHomeBinding
-    lateinit var user : User
-    lateinit var sharedPreferences: SharedPreferences
+    private lateinit var user : User
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,13 +47,13 @@ class HomeFragment : Fragment() {
         Log.d("Saved User", "$user")
 
         Glide.with(this)
-            .load((user as User).picture)
+            .load(user.picture)
             .placeholder(R.drawable.img_user) // Add a placeholder drawable
             .error(R.drawable.img_user)// Add a drawable for error cases
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(binding.imgUserProfile)
 
-        if ((user as User).picture != null){
+        if (user.picture != null){
             Log.d("Saved User", "$user")
 
         }

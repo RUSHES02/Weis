@@ -12,5 +12,7 @@
     <color name="textColor">#1E1E1E</color>
 
     <color name="transparent">#00000000</color>
+    <color name="translucent">#55FFFFFF</color>
+
 
 </resources>

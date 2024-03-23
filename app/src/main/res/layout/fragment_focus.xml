@@ -10,7 +10,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragContFocus"
-        android:name="com.example.weis.ui.fragment.StartMusicFragment"
+        android:name="com.example.weis.ui.fragment.musicFragments.StartMusicFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>
