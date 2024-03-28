@@ -10,19 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/flotBtnAddGoal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/floating_btn"
-            android:clickable="true"
-            android:src="@drawable/ic_add"
-            android:padding="15dp"
-            app:shapeAppearanceOverlay="@drawable/floating_btn"
-            app:backgroundTint="@color/primaryColor"
-            app:layout_constraintBottom_toTopOf="@+id/gdGoalBottom"
-            app:layout_constraintEnd_toStartOf="@+id/gdGoalRight" />
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gdGoalLeft"
             android:layout_width="wrap_content"
@@ -80,6 +67,19 @@
             app:layout_constraintEnd_toStartOf="@+id/gdGoalRight"
             app:layout_constraintStart_toStartOf="@+id/gdGoalLeft"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/flotBtnAddGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/floating_btn"
+            android:clickable="true"
+            android:padding="15dp"
+            android:src="@drawable/ic_add"
+            app:backgroundTint="@color/primaryColor"
+            app:layout_constraintBottom_toTopOf="@+id/gdGoalBottom"
+            app:layout_constraintEnd_toStartOf="@+id/gdGoalRight"
+            app:shapeAppearanceOverlay="@drawable/floating_btn" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

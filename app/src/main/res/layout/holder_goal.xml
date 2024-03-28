@@ -8,23 +8,6 @@
     android:background="@drawable/bg_text_box"
     android:backgroundTint="@color/greyLight">
 
-    <TextView
-        android:id="@+id/textGoalDur"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_rounded"
-        android:backgroundTint="@color/textColor"
-        android:ellipsize="end"
-        android:padding="10dp"
-        android:text=" 22 m"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btnStart"
-        app:layout_constraintEnd_toStartOf="@+id/gdGoalCardRight"
-        app:layout_constraintTop_toTopOf="@+id/gdGoalCardTop" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gdGoalCardLeft"
         android:layout_width="wrap_content"
@@ -47,26 +30,18 @@
         app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gdGoalCardMid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gdGoalCardBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.85" />
-
-    <Button
-        android:id="@+id/btnStart"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/bg_text_box"
-        android:text="Start"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/gdGoalCardBottom"
-        app:layout_constraintEnd_toStartOf="@+id/gdGoalCardRight"
-        app:layout_constraintStart_toStartOf="@+id/gdGoalCardLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textGoalDur" />
 
     <TextView
         android:id="@+id/textGoalTittle"
@@ -80,16 +55,55 @@
         android:text="text view"
         android:textColor="@color/textColor"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnStart"
+        app:layout_constraintBottom_toTopOf="@+id/textGoalDatetime"
         app:layout_constraintEnd_toStartOf="@+id/gdGoalCardMid"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/gdGoalCardLeft"
         app:layout_constraintTop_toTopOf="@+id/gdGoalCardTop" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gdGoalCardMid"
+    <TextView
+        android:id="@+id/textGoalDur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        android:background="@drawable/bg_rounded"
+        android:backgroundTint="@color/textColor"
+        android:ellipsize="end"
+        android:padding="10dp"
+        android:text=" 22 m"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnStart"
+        app:layout_constraintEnd_toStartOf="@+id/gdGoalCardRight"
+        app:layout_constraintTop_toTopOf="@+id/gdGoalCardTop" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnStart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/bg_text_box"
+        android:minHeight="0dp"
+        android:paddingVertical="5dp"
+        android:text="Start"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/gdGoalCardBottom"
+        app:layout_constraintEnd_toStartOf="@+id/gdGoalCardRight"
+        app:layout_constraintStart_toStartOf="@+id/gdGoalCardLeft"
+        app:layout_constraintTop_toBottomOf="@+id/textGoalDur" />
+
+    <TextView
+        android:id="@+id/textGoalDatetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/btnStart"
+        app:layout_constraintStart_toStartOf="@+id/gdGoalCardLeft"
+        app:layout_constraintTop_toBottomOf="@+id/textGoalTittle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

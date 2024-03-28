@@ -76,13 +76,15 @@ class LoginFragment : Fragment() {
             .addOnSuccessListener{document ->
                 if (document.exists()) {
                     Log.d("fetched user", document.toString())
+                    Toast.makeText(context, "Document Successful", Toast.LENGTH_SHORT).show()
                     val userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
                     val userModel = userViewModel.convertToUserModel(document)
                     StoreUser.saveData(userModel, requireActivity())
                     val intent = Intent(requireActivity(), MainContainerActivity::class.java)
                     startActivity(intent)
                 } else {
-                    Log.d("fetched user", "falied")
+                    Toast.makeText(context, "Document Failed", Toast.LENGTH_SHORT).show()
+                    Log.d("fetched user", "failed")
                 }
             }
     }

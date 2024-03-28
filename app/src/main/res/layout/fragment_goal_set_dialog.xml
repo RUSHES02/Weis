@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollViewGoalDialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_text_box"
+    android:backgroundTint="@color/white"
+    tools:context=".ui.fragment.GoalSetDialogFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cnsLayGoalDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_text_box"
+        android:backgroundTint="@color/white">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gdlineDialogTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gdlineDialogBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gdlineDialogLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gdlineDialogRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <EditText
+            android:id="@+id/editTextGoalTittle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_text_box"
+            android:backgroundTint="@color/greyLight"
+            android:ems="10"
+            android:hint="@string/goal_tittle"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/textColor"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/textSetDuration"
+            app:layout_constraintEnd_toStartOf="@+id/gdlineDialogRight"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/gdlineDialogLeft"
+            app:layout_constraintTop_toTopOf="@+id/gdlineDialogTop"
+            app:layout_constraintVertical_chainStyle="spread_inside" />
+
+        <TextView
+            android:id="@+id/textSetDuration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/set_duration"
+            android:textColor="@color/textColor"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/numPickerSetTimer"
+            app:layout_constraintEnd_toStartOf="@+id/gdlineDialogRight"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/gdlineDialogLeft"
+            app:layout_constraintTop_toBottomOf="@+id/editTextGoalTittle" />
+
+        <NumberPicker
+            android:id="@+id/numPickerSetTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/textSetTime"
+            app:layout_constraintEnd_toStartOf="@+id/gdlineDialogRight"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/gdlineDialogLeft"
+            app:layout_constraintTop_toBottomOf="@+id/textSetDuration" />
+
+        <TextView
+            android:id="@+id/textSetTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/set_date_and_time"
+            android:textColor="@color/textColor"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/datePickerGoal"
+            app:layout_constraintEnd_toStartOf="@+id/gdlineDialogRight"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/gdlineDialogLeft"
+            app:layout_constraintTop_toBottomOf="@+id/numPickerSetTimer" />
+
+        <DatePicker
+            android:id="@+id/datePickerGoal"
+            style="@android:style/Widget.DatePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:calendarTextColor="@color/textColor"
+            android:yearListSelectorColor="@color/accentColor"
+            app:layout_constraintBottom_toTopOf="@+id/timePickerGoal"
+            app:layout_constraintEnd_toStartOf="@+id/gdlineDialogRight"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/gdlineDialogLeft"
+            app:layout_constraintTop_toBottomOf="@+id/textSetTime" />
+
+        <TimePicker
+            android:id="@+id/timePickerGoal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hapticFeedbackEnabled="true"
+            android:headerBackground="@color/primaryColor"
+            android:numbersSelectorColor="@color/primaryColor"
+            android:theme="@style/Clock"
+            app:layout_constraintBottom_toTopOf="@+id/btnSetGoal"
+            app:layout_constraintEnd_toStartOf="@+id/gdlineDialogRight"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/gdlineDialogLeft"
+            app:layout_constraintTop_toBottomOf="@+id/datePickerGoal" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSetGoal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_text_box"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="5dp"
+            android:text="@string/set_goal"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@id/gdlineDialogBottom"
+            app:layout_constraintEnd_toStartOf="@+id/gdlineDialogRight"
+            app:layout_constraintStart_toStartOf="@+id/gdlineDialogLeft"
+            app:layout_constraintTop_toBottomOf="@+id/timePickerGoal" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

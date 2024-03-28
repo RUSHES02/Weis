@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Weis" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Base.Theme.Weis" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash_weis</item>
@@ -16,5 +16,9 @@
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash_weis</item>
         <item name="windowSplashScreenAnimationDuration">1000</item>
         <item name="postSplashScreenTheme">@style/Theme.Weis</item>
+    </style>
+
+    <style name="Clock" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:colorPrimary"> @color/accentColor</item>
     </style>
 </resources>

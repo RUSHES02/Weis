@@ -67,28 +67,36 @@
             app:layout_constraintStart_toStartOf="@+id/imgHeadphones"
             app:layout_constraintTop_toBottomOf="@+id/imgHeadphones" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardBtn"
+        <ImageButton
+            android:id="@+id/imgBtnPlay"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:background="@drawable/bg_rounded"
             android:backgroundTint="@color/white"
-            app:cardCornerRadius="50dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_play"
+            android:padding="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgHeadphones">
+            app:layout_constraintTop_toBottomOf="@+id/imgHeadphones" />
 
-            <ImageButton
-                android:id="@+id/imgBtnPlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:backgroundTint="@color/white"
-                android:src="@drawable/ic_play" />
-        </androidx.cardview.widget.CardView>
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/cardBtn"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:background="@drawable/bg_rounded"-->
+<!--            android:backgroundTint="@color/white"-->
+<!--            app:cardCornerRadius="50dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintDimensionRatio="1:1"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/imgHeadphones">-->
+<!--        </androidx.cardview.widget.CardView>-->
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gdFocusTop"

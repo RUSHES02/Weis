@@ -18,5 +18,9 @@
 
     <string name="concat">%1$s %2$s</string>
     <string name="web_client_id">878414644377-58r8hrqe58ve7rmv4piljattuuct1b6a.apps.googleusercontent.com</string>
+    <string name="goal_tittle">Goal Tittle</string>
+    <string name="set_duration">Set Duration</string>
+    <string name="set_date_and_time">Set date and time</string>
+    <string name="set_goal">Set Goal</string>
 
 </resources>

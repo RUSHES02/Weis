@@ -25,7 +25,6 @@ class RegistrationFragment : Fragment() {
 
     private lateinit var  binding : FragmentRegistrationBinding
     private lateinit var deRef : CollectionReference
-
     private lateinit var  firebaseAuth : FirebaseAuth
 
     override fun onCreateView(
@@ -41,7 +40,6 @@ class RegistrationFragment : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
         deRef = FirebaseFirestore.getInstance().collection("User")
 
-//
 //        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 //            .requestEmail()
 //            .requestIdToken(getString(R.string.web_client_id))
@@ -102,6 +100,7 @@ class RegistrationFragment : Fragment() {
         firebaseAuth.createUserWithEmailAndPassword(user.email, user.password)
             .addOnSuccessListener {
                 Toast.makeText(context, "Register Successfully", Toast.LENGTH_SHORT).show()
+                Log.d("Auth", "success")
                 binding.editTextName.setText("")
                 binding.editTextEmail.setText("")
                 binding.editTextPass.setText("")
@@ -109,14 +108,18 @@ class RegistrationFragment : Fragment() {
                 deRef.document(user.email).set(mapOf("name" to user.name))
                     .addOnSuccessListener {
                         Toast.makeText(context, "Firestore Successfully", Toast.LENGTH_SHORT).show()
+                        Log.d("reg db ref", "success")
+                        StoreUser.saveData(user, requireActivity())
+                        val intent = Intent(requireActivity(), MainContainerActivity::class.java)
+                        startActivity(intent)
                     }.addOnFailureListener {
                         Toast.makeText(context, "firestore Failed", Toast.LENGTH_SHORT).show()
+                        Log.d("reg db ref", "failed")
                     }
-                StoreUser.saveData(user, requireActivity())
-                val intent = Intent(requireActivity(), MainContainerActivity::class.java)
-                startActivity(intent)
+
             }.addOnFailureListener {
                 Toast.makeText(context, "Register Failed", Toast.LENGTH_SHORT).show()
+                Log.d("Auth", "failed")
             }
     }
 

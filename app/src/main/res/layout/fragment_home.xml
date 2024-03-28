@@ -20,6 +20,13 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gdlineHomeTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
     <ImageView
         android:id="@+id/imgBgTop"
         android:layout_width="0dp"
@@ -72,13 +79,6 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gdlineHomeTop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05" />
 
     <TextView
         android:id="@+id/txtUsername"

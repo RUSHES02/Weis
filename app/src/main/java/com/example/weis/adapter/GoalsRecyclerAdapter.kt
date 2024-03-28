@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -37,6 +38,7 @@ class GoalsRecyclerAdapter : RecyclerView.Adapter<GoalsRecyclerAdapter.GoalsHold
         val textGoalTitle : TextView = itemView.findViewById(R.id.textGoalTittle)
         val textGoalDur : TextView = itemView.findViewById(R.id.textGoalDur)
         var btnStart : Button = itemView.findViewById(R.id.btnStart)
+        val textGoalDateTime : TextView = itemView.findViewById(R.id.textGoalDatetime)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GoalsHolder {
@@ -51,7 +53,9 @@ class GoalsRecyclerAdapter : RecyclerView.Adapter<GoalsRecyclerAdapter.GoalsHold
         val goal = differ.currentList[position]
         holder.textGoalTitle.text = goal.goal
         holder.textGoalDur.text = goal.duration
+        holder.textGoalDateTime.text = "${goal.date}   ${goal.time}"
         holder.btnStart.visibility = View.GONE
+        holder.btnStart.background = ContextCompat.getDrawable(holder.itemView.context, R.drawable.bg_text_box)
         holder.itemView.setOnClickListener{
             if (goal.open){
                 holder.btnStart.visibility = View.GONE
