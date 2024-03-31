@@ -1,4 +1,4 @@
-package com.example.weis.ui.fragment.musicFragments
+package com.example.weis.ui.fragment.mainFragments.focusFragments.sub
 
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -11,11 +11,12 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.weis.R
 import com.example.weis.databinding.FragmentPlayBinding
+import com.example.weis.modals.Goal
 
-class PlayFragment : Fragment() {
+class PlayFragment(private val goal : Goal? = null) : Fragment() {
 
 
-    private lateinit var binder : FragmentPlayBinding
+    private lateinit var binding : FragmentPlayBinding
     private val handler = android.os.Handler()
     lateinit var mediaPlayer :MediaPlayer
     private val musics = arrayOf("Black Hole", "Rain On Car Window")
@@ -30,8 +31,8 @@ class PlayFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binder = FragmentPlayBinding.inflate(inflater, container, false)
-        return binder.root
+        binding = FragmentPlayBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     private var state  = MediaState.OFF
@@ -40,9 +41,15 @@ class PlayFragment : Fragment() {
         mediaPlayer = MediaPlayer.create(context, R.raw.rain_car_win)
         mediaPlayer.isLooping = false
 
+        if(goal != null){
+            binding.textGoalComp.text = goal.goal
+        }else{
+            binding.textGoalComp.visibility = View.GONE
+        }
+
         val musicOptions : ArrayAdapter<String> = ArrayAdapter(requireContext(), R.layout.music_list_item, musicList.keys.toTypedArray())
-        binder.musicOptions.setAdapter(musicOptions)
-        binder.musicOptions.onItemClickListener = AdapterView.OnItemClickListener {
+        binding.musicOptions.setAdapter(musicOptions)
+        binding.musicOptions.onItemClickListener = AdapterView.OnItemClickListener {
             parent, view, position, id ->
             val key : String? = parent?.getItemAtPosition(position)?.toString()
             val resourceId: Int? = key?.let { musicList[it] }
@@ -56,25 +63,25 @@ class PlayFragment : Fragment() {
 
         }
 
-        binder.musicOptions.setDropDownBackgroundDrawable(
+        binding.musicOptions.setDropDownBackgroundDrawable(
             ResourcesCompat.getDrawable(
                 resources,
                 R.drawable.bg_text_box,
                 null
             )
         )
-        binder.musicOptions.setDropDownBackgroundResource(R.color.translucent)
+        binding.musicOptions.setDropDownBackgroundResource(R.color.translucent)
 
 
-        binder.imgBtnPlayPause.setOnClickListener{
+        binding.imgBtnPlayPause.setOnClickListener{
             if(state == MediaState.OFF){
                 state = MediaState.ON
                 mediaPlayer.start()
-                binder.imgBtnPlayPause.setImageResource(R.drawable.ic_pause)
+                binding.imgBtnPlayPause.setImageResource(R.drawable.ic_pause)
             }else{
                 state = MediaState.OFF
                 mediaPlayer.pause()
-                binder.imgBtnPlayPause.setImageResource(R.drawable.ic_play)
+                binding.imgBtnPlayPause.setImageResource(R.drawable.ic_play)
              }
         }
         startPeriodicTask()

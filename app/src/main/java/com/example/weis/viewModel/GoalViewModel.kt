@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 class GoalViewModel : ViewModel() {
 
     fun convertDate(year: Int, month: Int, day: Int) : String {
-        return ("$day/$month/${year%100}")
+        return ("$day/${month + 1}/${year%100}")
     }
 
     fun convertTime(hour: Int, minute: Int) : String{

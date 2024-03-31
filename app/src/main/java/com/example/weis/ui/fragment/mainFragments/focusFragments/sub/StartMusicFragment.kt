@@ -1,4 +1,4 @@
-package com.example.weis.ui.fragment.musicFragments
+package com.example.weis.ui.fragment.mainFragments.focusFragments.sub
 
 import android.os.Bundle
 import android.util.Log
@@ -8,9 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.weis.R
 import com.example.weis.databinding.FragmentStartMusicBinding
+import com.example.weis.modals.Goal
+import com.example.weis.ui.fragment.mainFragments.focusFragments.sub.PlayFragment
 
-class StartMusicFragment : Fragment() {
-
+class StartMusicFragment(private val goal : Goal? = null) : Fragment() {
 
     private lateinit var binding : FragmentStartMusicBinding
     override fun onCreateView(
@@ -25,7 +26,7 @@ class StartMusicFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.imgBtnPlay.setOnClickListener{
             Log.d("start music", "sensed clicked")
-            val newFragment = PlayFragment()
+            val newFragment = PlayFragment(goal)
             val fragmentManager = parentFragmentManager
             val transaction = fragmentManager.beginTransaction()
             transaction.replace(R.id.fragContFocus, newFragment)
@@ -33,11 +34,4 @@ class StartMusicFragment : Fragment() {
             transaction.commit()
         }
     }
-//
-//    class ParentFragment : Fragment(), FocusFragment.OnNestedFragmentInteractionListener {
-//        override fun onInteraction(data: String) {
-//            // Handle the interaction
-//        }
-//    }
-
 }

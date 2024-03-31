@@ -1,4 +1,4 @@
-package com.example.weis.ui.fragment
+package com.example.weis.ui.fragment.mainFragments
 
 import android.content.Context
 import android.content.Intent

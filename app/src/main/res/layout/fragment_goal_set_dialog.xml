@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_text_box"
     android:backgroundTint="@color/white"
-    tools:context=".ui.fragment.GoalSetDialogFragment">
+    tools:context=".ui.fragment.mainFragments.goalFragments.GoalSetDialogFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

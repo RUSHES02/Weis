@@ -1,5 +1,6 @@
 package com.example.weis.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,10 +36,38 @@ class GoalsRecyclerAdapter : RecyclerView.Adapter<GoalsRecyclerAdapter.GoalsHold
     }
 
     inner class GoalsHolder (itemView : View) : RecyclerView.ViewHolder(itemView){
-        val textGoalTitle : TextView = itemView.findViewById(R.id.textGoalTittle)
-        val textGoalDur : TextView = itemView.findViewById(R.id.textGoalDur)
-        var btnStart : Button = itemView.findViewById(R.id.btnStart)
-        val textGoalDateTime : TextView = itemView.findViewById(R.id.textGoalDatetime)
+        private val textGoalTitle : TextView = itemView.findViewById(R.id.textGoalTittle)
+        private val textGoalDur : TextView = itemView.findViewById(R.id.textGoalDur)
+        private var btnStart : Button = itemView.findViewById(R.id.btnStart)
+        private val textGoalDateTime : TextView = itemView.findViewById(R.id.textGoalDatetime)
+
+        fun bind (goal : Goal){
+            textGoalTitle.text = goal.goal
+            textGoalDur.text = goal.duration
+            textGoalDateTime.text = "${goal.date}   ${goal.time}"
+            btnStart.visibility = View.GONE
+            btnStart.background = ContextCompat.getDrawable(itemView.context, R.drawable.bg_text_box)
+            btnStart.setOnClickListener{
+                Log.d("Start Button","clicked")
+                onStartClick?.invoke(goal)
+            }
+            itemView.setOnClickListener{
+                if (goal.open){
+                    btnStart.visibility = View.GONE
+                    lastActive = null
+                    lastActivePos = null
+                }else{
+                    btnStart.visibility = View.VISIBLE
+                    lastActive?.btnStart?.visibility = View.GONE
+                    if(lastActivePos != null){
+                        differ.currentList[lastActivePos!!].open = false
+                    }
+                    lastActive = GoalsHolder(itemView)
+                    lastActivePos = adapterPosition
+                }
+                differ.currentList[position].open = !goal.open
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GoalsHolder {
@@ -51,27 +80,7 @@ class GoalsRecyclerAdapter : RecyclerView.Adapter<GoalsRecyclerAdapter.GoalsHold
 
     override fun onBindViewHolder(holder: GoalsHolder, position: Int) {
         val goal = differ.currentList[position]
-        holder.textGoalTitle.text = goal.goal
-        holder.textGoalDur.text = goal.duration
-        holder.textGoalDateTime.text = "${goal.date}   ${goal.time}"
-        holder.btnStart.visibility = View.GONE
-        holder.btnStart.background = ContextCompat.getDrawable(holder.itemView.context, R.drawable.bg_text_box)
-        holder.itemView.setOnClickListener{
-            if (goal.open){
-                holder.btnStart.visibility = View.GONE
-                lastActive = null
-                lastActivePos = null
-            }else{
-                holder.btnStart.visibility = View.VISIBLE
-                lastActive?.btnStart?.visibility = View.GONE
-                if(lastActivePos != null){
-                    differ.currentList[lastActivePos!!].open = false
-                }
-                lastActive = holder
-                lastActivePos = holder.adapterPosition
-            }
-            differ.currentList[position].open = !goal.open
-        }
+        holder.bind(goal)
     }
 
     var onItemClick :((Goal) -> Unit)? = null

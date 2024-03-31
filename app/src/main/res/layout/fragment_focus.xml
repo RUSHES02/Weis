@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_screen_grad"
-    tools:context=".ui.fragment.FocusFragment" >
+    tools:context=".ui.fragment.mainFragments.focusFragments.FocusFragment" >
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragContFocus"
-        android:name="com.example.weis.ui.fragment.musicFragments.StartMusicFragment"
+        android:name="com.example.weis.ui.fragment.mainFragments.focusFragments.sub.StartMusicFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>

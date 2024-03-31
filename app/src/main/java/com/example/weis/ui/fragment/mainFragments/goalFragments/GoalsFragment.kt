@@ -1,4 +1,4 @@
-package com.example.weis.ui.fragment
+package com.example.weis.ui.fragment.mainFragments.goalFragments
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -14,6 +14,7 @@ import com.example.weis.adapter.GoalsRecyclerAdapter
 import com.example.weis.databinding.FragmentGoalsBinding
 import com.example.weis.modals.Goal
 import com.example.weis.modals.User
+import com.example.weis.ui.activity.MainContainerActivity
 import com.example.weis.utils.DialogClickListener
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,6 +27,7 @@ class GoalsFragment : Fragment(), DialogClickListener {
     private val goals =  ArrayList<Goal>()
     private val goalsAdapter = GoalsRecyclerAdapter()
     private lateinit var goalCollectionReference :CollectionReference
+//    private val mainContainerActivity : MainContainerActivity? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +48,10 @@ class GoalsFragment : Fragment(), DialogClickListener {
         binding.recyclerGoals.adapter = goalsAdapter
         goalCollectionReference = FirebaseFirestore.getInstance().collection("User").document(user!!.email).collection("Goals")
 
+        goalsAdapter.onStartClick = { goal ->
+            Log.d("Start Button","goal page")
+            (requireActivity() as MainContainerActivity).changeTab(0, goal)
+        }
         goalCollectionReference.get()
             .addOnSuccessListener { querySnapshot ->
                 for (document in querySnapshot){
