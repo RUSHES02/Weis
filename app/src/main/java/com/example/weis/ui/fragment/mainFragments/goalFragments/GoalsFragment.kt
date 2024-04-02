@@ -59,7 +59,7 @@ class GoalsFragment : Fragment(), DialogClickListener {
                     val goal = Goal(
                         id = document.id,
                         goal = data["name"].toString(),
-                        duration = data["duration"].toString(),
+                        duration = data["duration"] as Long,
                         date = data["date"].toString(),
                         time = data["time"].toString()
                     )

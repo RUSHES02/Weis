@@ -43,7 +43,7 @@ class GoalsRecyclerAdapter : RecyclerView.Adapter<GoalsRecyclerAdapter.GoalsHold
 
         fun bind (goal : Goal){
             textGoalTitle.text = goal.goal
-            textGoalDur.text = goal.duration
+            textGoalDur.text = goal.duration.toString() + " m"
             textGoalDateTime.text = "${goal.date}   ${goal.time}"
             btnStart.visibility = View.GONE
             btnStart.background = ContextCompat.getDrawable(itemView.context, R.drawable.bg_text_box)

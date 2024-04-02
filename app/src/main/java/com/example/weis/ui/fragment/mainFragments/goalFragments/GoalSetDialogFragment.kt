@@ -16,7 +16,6 @@ import com.example.weis.viewModel.GoalViewModel
 import java.time.LocalDateTime
 import java.util.Calendar
 import java.util.Date
-import kotlin.math.log
 
 class GoalSetDialogFragment : DialogFragment() {
 
@@ -68,7 +67,7 @@ class GoalSetDialogFragment : DialogFragment() {
                         hour = binding.timePickerGoal.hour,
                         minute = binding.timePickerGoal.minute
                     ),
-                    duration = binding.numPickerSetTimer.value.toString() + " m"
+                    duration = (binding.numPickerSetTimer.value).toLong()
                 )
 
                 listener?.onDataPassed(goal)

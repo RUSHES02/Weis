@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import com.example.weis.R
 import com.example.weis.databinding.FragmentStartMusicBinding
 import com.example.weis.modals.Goal
-import com.example.weis.ui.fragment.mainFragments.focusFragments.sub.PlayFragment
 
 class StartMusicFragment(private val goal : Goal? = null) : Fragment() {
 
