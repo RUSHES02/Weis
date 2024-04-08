@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.weis.databinding.FragmentGoalSetDialogBinding
 import com.example.weis.modals.Goal
+import com.example.weis.utils.DateTimeEpoch
 import com.example.weis.utils.DialogClickListener
 import com.example.weis.utils.ScreenUtils
 import com.example.weis.viewModel.GoalViewModel
@@ -40,8 +41,8 @@ class GoalSetDialogFragment : DialogFragment() {
         val screenHeight = ScreenUtils.getScreenHeight()
 
         val layoutParams = binding.scrollViewGoalDialog.layoutParams
-        layoutParams.width = (screenWidth * 0.85).toInt()
-        layoutParams.height = (screenHeight * 0.50).toInt()
+        layoutParams.width = (screenWidth * 0.9).toInt()
+        layoutParams.height = (screenHeight * 1.0).toInt()
         binding.scrollViewGoalDialog.layoutParams = layoutParams
 
         binding.numPickerSetTimer.minValue = 0
@@ -67,7 +68,13 @@ class GoalSetDialogFragment : DialogFragment() {
                         hour = binding.timePickerGoal.hour,
                         minute = binding.timePickerGoal.minute
                     ),
-                    duration = (binding.numPickerSetTimer.value).toLong()
+                    duration = (binding.numPickerSetTimer.value).toLong(),
+                    timestamp = DateTimeEpoch
+                        .dateToEpochTime("${binding.datePickerGoal.dayOfMonth} " +
+                                "${binding.datePickerGoal.month} " +
+                                "${binding.datePickerGoal.year} " +
+                                "${binding.timePickerGoal.hour} " +
+                                "${binding.timePickerGoal.minute} 00", "dd MM yyyy HH mm ss")
                 )
 
                 listener?.onDataPassed(goal)
@@ -78,30 +85,34 @@ class GoalSetDialogFragment : DialogFragment() {
     }
 
     private fun validateGoalDetails() : Boolean{
+        val goalTimestamp = DateTimeEpoch
+            .dateToEpochTime("${binding.datePickerGoal.dayOfMonth} " +
+                    "${binding.datePickerGoal.month} " +
+                    "${binding.datePickerGoal.year} " +
+                    "${binding.timePickerGoal.hour} " +
+                    "${binding.timePickerGoal.minute} 00", "dd MM yyyy HH mm ss")
 
         val dateTime = getCurrentDateTime()
+        val currentTimestamp = DateTimeEpoch
+            .dateToEpochTime("${dateTime.dayOfMonth} " +
+                    "${dateTime.monthValue - 1} " +
+                    "${dateTime.year} " +
+                    "${dateTime.hour} " +
+                    "${dateTime.minute} 00", "dd MM yyy HH mm ss")
+
+
+        Log.d("current timestamp", "$currentTimestamp")
         if(binding.editTextGoalTittle.text.toString().trim() == ""){
             binding.editTextGoalTittle.error = "Tittle not set"
             return false
         }else if (binding.numPickerSetTimer.value == 0){
             Toast.makeText(requireContext(), "Duration required", Toast.LENGTH_SHORT).show()
             return false
-        }else if(binding.datePickerGoal.year == dateTime.year
-            && binding.datePickerGoal.month == dateTime.monthValue - 1
-            && binding.datePickerGoal.dayOfMonth == dateTime.dayOfMonth
-            && binding.timePickerGoal.hour <= dateTime.hour){
-
-            Log.d("time check", "here")
-            if (binding.timePickerGoal.hour < dateTime.hour){
-                Toast.makeText(requireContext(), "Time set before current time", Toast.LENGTH_SHORT).show()
-                return false
-            }else if(binding.timePickerGoal.hour == dateTime.hour
-                && binding.timePickerGoal.minute <= dateTime.minute + 1){
-                Toast.makeText(requireContext(), "Time set before current time", Toast.LENGTH_SHORT).show()
-                return false
-            }
-
+        }else if (goalTimestamp <= currentTimestamp + 60000){
+            Toast.makeText(requireContext(), "Time set before current time", Toast.LENGTH_SHORT).show()
+            return false
         }
+
         return true
     }
 
@@ -117,3 +128,21 @@ class GoalSetDialogFragment : DialogFragment() {
         return LocalDateTime.now()
     }
 }
+
+
+//else if(binding.datePickerGoal.year == dateTime.year
+//&& binding.datePickerGoal.month == dateTime.monthValue - 1
+//&& binding.datePickerGoal.dayOfMonth == dateTime.dayOfMonth
+//&& binding.timePickerGoal.hour <= dateTime.hour){
+//
+//    Log.d("time check", "here")
+//    if (binding.timePickerGoal.hour < dateTime.hour){
+//        Toast.makeText(requireContext(), "Time set before current time", Toast.LENGTH_SHORT).show()
+//        return false
+//    }else if(binding.timePickerGoal.hour == dateTime.hour
+//        && binding.timePickerGoal.minute <= dateTime.minute + 1){
+//        Toast.makeText(requireContext(), "Time set before current time", Toast.LENGTH_SHORT).show()
+//        return false
+//    }
+//
+//}

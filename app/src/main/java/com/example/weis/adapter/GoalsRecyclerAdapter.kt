@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weis.R
 import com.example.weis.modals.Goal
+import com.example.weis.utils.DateTimeEpoch
+import java.time.LocalDateTime
 
 class GoalsRecyclerAdapter : RecyclerView.Adapter<GoalsRecyclerAdapter.GoalsHolder>() {
 
@@ -33,6 +35,8 @@ class GoalsRecyclerAdapter : RecyclerView.Adapter<GoalsRecyclerAdapter.GoalsHold
 
     fun saveData( dataResponse: List<Goal>){
         differ.submitList(dataResponse)
+        Log.d("in adapter", "${differ.currentList}")
+
     }
 
     inner class GoalsHolder (itemView : View) : RecyclerView.ViewHolder(itemView){
@@ -46,7 +50,21 @@ class GoalsRecyclerAdapter : RecyclerView.Adapter<GoalsRecyclerAdapter.GoalsHold
             textGoalDur.text = goal.duration.toString() + " m"
             textGoalDateTime.text = "${goal.date}   ${goal.time}"
             btnStart.visibility = View.GONE
-            btnStart.background = ContextCompat.getDrawable(itemView.context, R.drawable.bg_text_box)
+
+            Log.d("adapter", "${goal}    ")
+            val dateTime = getCurrentDateTime()
+            val currentTimestamp = DateTimeEpoch
+                .dateToEpochTime("${dateTime.dayOfMonth} " +
+                        "${dateTime.monthValue - 1} " +
+                        "${dateTime.year} " +
+                        "${dateTime.hour} " +
+                        "${dateTime.minute} 00", "dd MM yyy HH mm ss")
+            if(goal.timestamp!! <= currentTimestamp){
+                btnStart.background = ContextCompat.getDrawable(itemView.context, R.drawable.bg_button_enabled)
+            }else{
+                btnStart.background = ContextCompat.getDrawable(itemView.context, R.drawable.bg_button_disable)
+                btnStart.isEnabled = false
+            }
             btnStart.setOnClickListener{
                 Log.d("Start Button","clicked")
                 onStartClick?.invoke(goal)
@@ -80,9 +98,14 @@ class GoalsRecyclerAdapter : RecyclerView.Adapter<GoalsRecyclerAdapter.GoalsHold
 
     override fun onBindViewHolder(holder: GoalsHolder, position: Int) {
         val goal = differ.currentList[position]
+        Log.d("in adapter", "yes")
         holder.bind(goal)
     }
 
     var onItemClick :((Goal) -> Unit)? = null
     var onStartClick :((Goal) -> Unit)? = null
+
+    private fun getCurrentDateTime(): LocalDateTime {
+        return LocalDateTime.now()
+    }
 }

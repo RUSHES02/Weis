@@ -1,12 +1,8 @@
 package com.example.weis.ui.fragment.mainFragments.focusFragments.sub
 
-import android.media.AudioAttributes
-import android.media.AudioManager
 import android.media.MediaPlayer
-import android.media.SoundPool
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,16 +13,14 @@ import androidx.fragment.app.Fragment
 import com.example.weis.R
 import com.example.weis.databinding.FragmentPlayBinding
 import com.example.weis.modals.Goal
-import java.util.Timer
-import kotlin.concurrent.schedule
 
 class PlayFragment(private val goal : Goal? = null) : Fragment() {
 
     //global variables
     private lateinit var binding : FragmentPlayBinding
 //    private val handler = android.os.Handler()
-    private lateinit var soundPool : SoundPool
-    private lateinit var timer : CountDownTimer
+//    private lateinit var soundPool : SoundPool
+    private var timer : CountDownTimer? = null
     private var state  = MediaState.ON
     var timeRemaining : Long = 0
 
@@ -36,7 +30,8 @@ class PlayFragment(private val goal : Goal? = null) : Fragment() {
     //list of musics
     private val musicList = mapOf(
         "Black Hole" to R.raw.black_hole,
-        "Rain On Car Window" to R.raw.rain_car_win
+        "Rain On Car Window" to R.raw.rain_car_win,
+        "Rain On Car Roof" to R.raw.rain_car_roof
     )
 
     override fun onCreateView(
@@ -67,14 +62,18 @@ class PlayFragment(private val goal : Goal? = null) : Fragment() {
             )
         )
         binding.musicOptions.setDropDownBackgroundResource(R.color.translucent)
+        binding.musicOptions.setText(musicList.keys.toList()[0])
 
         //if the media has to be run according to the goal set
         if(goal != null){
             binding.textGoalComp.text = goal.goal
+            binding.stopwatch.visibility = View.GONE
             binding.textTime.text = "${goal.duration} : 00"
             startOrResumeTimer(goal.duration * 60 * 1000)
         }else{
             binding.textGoalComp.visibility = View.GONE
+            binding.textTime.visibility = View.GONE
+            binding.stopwatch.start()
         }
 
         //setting the array adapter for the drop down menu
@@ -99,21 +98,36 @@ class PlayFragment(private val goal : Goal? = null) : Fragment() {
 
         //handling the pause and resume of the sound
         binding.imgBtnPlayPause.setOnClickListener{
-            if(timeRemaining > 1000) {
-                if (state == MediaState.OFF) {
-                    state = MediaState.ON
+            if(goal != null) {
+                if (timeRemaining > 1000) {
+                    if (state == MediaState.OFF) {
+                        state = MediaState.ON
+                        mediaPlayer.start()
+                        if (timer != null) {
+                            startOrResumeTimer(timeRemaining)
+                        }
+                        binding.imgBtnPlayPause.setImageResource(R.drawable.ic_pause)
+                    } else {
+                        if (mediaPlayer.isPlaying) {
+                            state = MediaState.OFF
+                            timer?.cancel()
+                            mediaPlayer.pause()
+                            binding.imgBtnPlayPause.setImageResource(R.drawable.ic_play)
 
-                    mediaPlayer.start()
-                    startOrResumeTimer(timeRemaining)
-                    binding.imgBtnPlayPause.setImageResource(R.drawable.ic_pause)
-                } else {
-                    if (mediaPlayer.isPlaying) {
-                        state = MediaState.OFF
-                        timer.cancel()
-                        mediaPlayer.pause()
-                        binding.imgBtnPlayPause.setImageResource(R.drawable.ic_play)
-
+                        }
                     }
+                }
+            }else{
+                if (state == MediaState.OFF){
+                    state = MediaState.ON
+                    binding.stopwatch.start()
+                    mediaPlayer.start()
+                    binding.imgBtnPlayPause.setImageResource(R.drawable.ic_pause)
+                }else{
+                    state = MediaState.OFF
+                    binding.stopwatch.stop()
+                    mediaPlayer.pause()
+                    binding.imgBtnPlayPause.setImageResource(R.drawable.ic_play)
                 }
             }
         }
@@ -149,7 +163,7 @@ class PlayFragment(private val goal : Goal? = null) : Fragment() {
     private fun startOrResumeTimer(durationInMillis: Long) {
         timer = object : CountDownTimer(durationInMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                binding.textTime.text = ((millisUntilFinished / 1000) / 60).toString() + " : " + ((millisUntilFinished / 1000) % 60).toString()
+                binding.textTime.text = (String.format("%02d",(millisUntilFinished / 1000) / 60).toString()) + " : " + String.format("%02d",(millisUntilFinished / 1000) % 60).toString()
                 timeRemaining = millisUntilFinished
             }
 

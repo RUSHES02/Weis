@@ -60,7 +60,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation("org.jetbrains:annotations:23.0.0")
-    implementation("com.google.firebase:firebase-firestore:24.10.3")
+    implementation("com.google.firebase:firebase-firestore:24.11.0")
     implementation("com.google.android.gms:play-services-auth:21.0.0")
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("com.google.firebase:firebase-database-ktx:20.3.1")
@@ -71,7 +71,7 @@ dependencies {
     //    implementation("com.android.support:support-v4:28.0.0")
 
     // Import the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation("com.google.firebase:firebase-analytics")
@@ -83,8 +83,10 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.10.1")
 
 //    implementation("androidx.core:core-splashscreen:1.0.1")
-    implementation ("androidx.core:core-splashscreen:1.0.0-beta02")
+    implementation ("androidx.core:core-splashscreen:1.0.1")
     implementation ("com.github.dhaval2404:imagepicker:2.1")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation ("com.github.Dimezis:BlurView:version-2.0.3")
+//    implementation ("com.ebanx:swipe-button:0.4.0")
+    implementation ("com.ncorti:slidetoact:0.11.0")
 }

@@ -15,6 +15,7 @@ import com.example.weis.databinding.FragmentGoalsBinding
 import com.example.weis.modals.Goal
 import com.example.weis.modals.User
 import com.example.weis.ui.activity.MainContainerActivity
+import com.example.weis.utils.DateTimeEpoch
 import com.example.weis.utils.DialogClickListener
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -56,14 +57,18 @@ class GoalsFragment : Fragment(), DialogClickListener {
             .addOnSuccessListener { querySnapshot ->
                 for (document in querySnapshot){
                     val data = document.data
-                    val goal = Goal(
+                    var goal = Goal(
                         id = document.id,
                         goal = data["name"].toString(),
                         duration = data["duration"] as Long,
-                        date = data["date"].toString(),
-                        time = data["time"].toString()
+                        timestamp = data["timestamp"] as Long,
                     )
+                    val (date, time)= DateTimeEpoch.epochTimeToDate(goal.timestamp!!).split(",")
+                    goal.date = date
+                    goal.time = time
                     goals.add(goal)
+                    Log.d("goals", goals.toString())
+                    goals.sortBy { it.timestamp }
                     goalsAdapter.saveData(goals)
                     binding.recyclerGoals.scrollToPosition(goals.size - 1)
                 }
@@ -82,8 +87,7 @@ class GoalsFragment : Fragment(), DialogClickListener {
         val goal = mapOf(
             "name" to data.goal,
             "duration" to data.duration,
-            "date" to data.date,
-            "time" to data.time
+            "timestamp" to data.timestamp
         )
         goalCollectionReference.add(goal)
             .addOnSuccessListener { documentReference ->
@@ -91,6 +95,7 @@ class GoalsFragment : Fragment(), DialogClickListener {
             }.addOnFailureListener { e ->
                 Log.e("Goal upload", "failure", e)
             }
+        goals.sortBy { it.timestamp }
         goals.add(data)
         goalsAdapter.saveData(goals)
         binding.recyclerGoals.scrollToPosition(goals.size - 1)

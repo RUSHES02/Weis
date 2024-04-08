@@ -23,6 +23,9 @@
         <activity
             android:name=".ui.activity.RegLoginContActivity"
             android:exported="false" />
+
+<!--        <activity android:name=".ui.fragment.mainFragments.goalFragments.GoalSetActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".ui.activity.WelcomeScreenActivity"
             android:exported="true"

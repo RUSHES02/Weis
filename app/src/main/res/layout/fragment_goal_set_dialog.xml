@@ -6,14 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_text_box"
-    android:backgroundTint="@color/white"
-    tools:context=".ui.fragment.mainFragments.goalFragments.GoalSetDialogFragment">
+    android:backgroundTint="@color/white" >
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cnsLayGoalDialog"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/bg_text_box"
         android:backgroundTint="@color/white">
 
@@ -139,7 +138,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/bg_text_box"
+            android:background="@drawable/bg_button_enabled"
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:paddingHorizontal="15dp"

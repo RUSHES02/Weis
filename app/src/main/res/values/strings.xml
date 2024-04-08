@@ -22,5 +22,6 @@
     <string name="set_duration">Set Duration</string>
     <string name="set_date_and_time">Set date and time</string>
     <string name="set_goal">Set Goal</string>
+    <string name="long_press_to_complete_goal">Long Press to Complete Goal</string>
 
 </resources>

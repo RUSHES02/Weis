@@ -131,7 +131,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/bg_text_box"
+                android:background="@drawable/bg_button_enabled"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:paddingHorizontal="15dp"
