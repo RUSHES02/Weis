@@ -12,7 +12,9 @@ class UserViewModel: ViewModel() {
         val email = document.id
         val password = document.getString("password") ?: ""
         val picture = document.getString("picture") ?: ""
+        val hrsOfFocus :Long? = document.get("hrsOfFocus") as Long
+        val tasksDone: Long? = document.get("tasksDone") as Long
 
-        return User(name, email, password, picture)
+        return User(name = name, email = email, password = password, picture = picture, hrsOfFocus = hrsOfFocus, tasksDone = tasksDone)
     }
 }

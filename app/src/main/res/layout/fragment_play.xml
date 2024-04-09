@@ -137,12 +137,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button"
+            android:id="@+id/btnFinishGoal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:background="@drawable/bg_text_box"
             android:backgroundTint="@color/translucent"
+            android:textColor="@color/textColor"
             android:text="@string/long_press_to_complete_goal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/gdPlayRight"

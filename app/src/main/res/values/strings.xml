@@ -17,11 +17,16 @@
     <string name="with_google">with google</string>
 
     <string name="concat">%1$s %2$s</string>
+    <string name="greet">Hi, %2$s</string>
+    <string name="time_focused">%1$s Focused</string>
+    <string name="task_done">Tasks Done</string>
     <string name="web_client_id">878414644377-58r8hrqe58ve7rmv4piljattuuct1b6a.apps.googleusercontent.com</string>
     <string name="goal_tittle">Goal Tittle</string>
     <string name="set_duration">Set Duration</string>
     <string name="set_date_and_time">Set date and time</string>
     <string name="set_goal">Set Goal</string>
     <string name="long_press_to_complete_goal">Long Press to Complete Goal</string>
+    <string name="progress_this_week">Progress this week:</string>
+    <string name="let_s_focus">Let\'s Focus!</string>
 
 </resources>

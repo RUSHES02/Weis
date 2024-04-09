@@ -103,9 +103,9 @@ class GoalSetDialogFragment : DialogFragment() {
 
         Log.d("current timestamp", "$currentTimestamp")
         if(binding.editTextGoalTittle.text.toString().trim() == ""){
-            binding.editTextGoalTittle.error = "Tittle not set"
             return false
         }else if (binding.numPickerSetTimer.value == 0){
+            binding.editTextGoalTittle.error = "Tittle not set"
             Toast.makeText(requireContext(), "Duration required", Toast.LENGTH_SHORT).show()
             return false
         }else if (goalTimestamp <= currentTimestamp + 60000){

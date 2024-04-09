@@ -1,8 +1,12 @@
 package com.example.weis.ui.fragment.mainFragments.focusFragments.sub
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,19 +17,22 @@ import androidx.fragment.app.Fragment
 import com.example.weis.R
 import com.example.weis.databinding.FragmentPlayBinding
 import com.example.weis.modals.Goal
+import com.example.weis.modals.User
+import com.example.weis.utils.StoreUser
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.Gson
 
 class PlayFragment(private val goal : Goal? = null) : Fragment() {
 
     //global variables
     private lateinit var binding : FragmentPlayBinding
-//    private val handler = android.os.Handler()
-//    private lateinit var soundPool : SoundPool
     private var timer : CountDownTimer? = null
     private var state  = MediaState.ON
     var timeRemaining : Long = 0
-
     private lateinit var mediaPlayer: MediaPlayer
-
+    private lateinit var dbrefUser : DocumentReference
+    private var user : User? = null
 
     //list of musics
     private val musicList = mapOf(
@@ -45,10 +52,13 @@ class PlayFragment(private val goal : Goal? = null) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("User", Context.MODE_PRIVATE)
+        val userDataJson = sharedPreferences.getString("user", null)
+        user = userDataJson?.let { Gson().fromJson(it, User::class.java)}
+
+        dbrefUser = FirebaseFirestore.getInstance().collection("User").document(user!!.email)
+        val dbrefGoal = dbrefUser.collection("Goals")
         //initializing the media player
-//        val fileDescriptor = context?.resources!!.openRawResourceFd(R.raw.black_hole)?.fileDescriptor
-
-
         mediaPlayer = MediaPlayer.create(context, R.raw.black_hole)
         mediaPlayer.isLooping = true
         mediaPlayer.start()
@@ -128,34 +138,28 @@ class PlayFragment(private val goal : Goal? = null) : Fragment() {
                     binding.stopwatch.stop()
                     mediaPlayer.pause()
                     binding.imgBtnPlayPause.setImageResource(R.drawable.ic_play)
+                    Log.d("stop time", "${SystemClock.elapsedRealtime() - binding.stopwatch.base}")
                 }
             }
+
         }
 
 
-
-
-        //keeping the sound in loop if the time is left
-//        if (timeRemaining > 1000){
-//            Timer().schedule(6000) {
-//                this@PlayFragment.mediaPlayer.seekTo(0)
-//            }
-//        }else{
-//            this.mediaPlayer.release()
-//        }
-//        startPeriodicTask()
-
-//        mediaPlayer.setOnCompletionListener {
-//            mediaPlayer.apply {
-//                start()
-//            }
-//        }
-
-//        if(goal != null){
-//            handler.postDelayed({
-//                stopMusic()
-//            }, (goal.duration * 60 * 1000).toLong())
-//        }
+        binding.btnFinishGoal.setOnLongClickListener{
+            if(goal != null){
+                dbrefGoal.document(goal.id.toString()).update(mapOf("State" to "incomplete"))
+                user?.hrsOfFocus = user!!.hrsOfFocus?.plus((goal.duration - timeRemaining) / 1000)
+                dbrefUser.update(mapOf("hrsOfFocus" to  user?.hrsOfFocus))
+                StoreUser.saveData(user!!, requireActivity())
+            }else{
+                user?.hrsOfFocus = (SystemClock.elapsedRealtime() - binding.stopwatch.base) / 1000
+                dbrefUser.update(mapOf("hrsOfFocus" to user?.hrsOfFocus))
+                StoreUser.saveData(user!!, requireActivity())
+            }
+            stopMusic()
+            parentFragmentManager.popBackStack()
+                true
+        }
     }
 
 
@@ -163,7 +167,7 @@ class PlayFragment(private val goal : Goal? = null) : Fragment() {
     private fun startOrResumeTimer(durationInMillis: Long) {
         timer = object : CountDownTimer(durationInMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                binding.textTime.text = (String.format("%02d",(millisUntilFinished / 1000) / 60).toString()) + " : " + String.format("%02d",(millisUntilFinished / 1000) % 60).toString()
+                binding.textTime.text = (String.format("%02d",(millisUntilFinished / 1000) / 60)) + " : " + String.format("%02d",(millisUntilFinished / 1000) % 60)
                 timeRemaining = millisUntilFinished
             }
 
@@ -171,6 +175,14 @@ class PlayFragment(private val goal : Goal? = null) : Fragment() {
                 binding.textTime.text = "00:00"
                 binding.imgBtnPlayPause.setImageResource(R.drawable.ic_play)
                 stopMusic()
+                user?.tasksDone = user?.tasksDone?.plus(1)
+                dbrefUser.update(mapOf("taskedCompleted" to user?.tasksDone))
+                StoreUser.saveData(user!!, requireActivity())
+                val newFragment = GoalFinishedFragment()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragContFocus, newFragment)
+                    .addToBackStack(null)
+                    .commit()
             }
         }.start()
     }
@@ -181,21 +193,6 @@ class PlayFragment(private val goal : Goal? = null) : Fragment() {
         mediaPlayer.stop()
         mediaPlayer.release()
     }
-
-
-    //variable to store object and run in loop
-//    private val runnable = object : Runnable {
-//        override fun run() {
-//            if(soundPool.isPlaying) {
-//                soundPool.seekTo(0)
-//                handler.postDelayed(this, 6000)
-//            }
-//        }
-//    }
-
-//    private fun startPeriodicTask() {
-//        handler.postDelayed(runnable, 6000)
-//    }
 
     //enum class to define the state of the sound
     enum class MediaState {
