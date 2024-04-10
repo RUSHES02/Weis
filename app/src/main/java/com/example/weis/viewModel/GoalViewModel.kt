@@ -1,9 +1,6 @@
 package com.example.weis.viewModel
 
 import androidx.lifecycle.ViewModel
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class GoalViewModel : ViewModel() {
 

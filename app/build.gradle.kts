@@ -89,4 +89,6 @@ dependencies {
     implementation ("com.github.Dimezis:BlurView:version-2.0.3")
 //    implementation ("com.ebanx:swipe-button:0.4.0")
     implementation ("com.ncorti:slidetoact:0.11.0")
+    implementation ("com.applandeo:material-calendar-view:1.9.2")
+
 }

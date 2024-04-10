@@ -14,11 +14,13 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.weis.R
 import com.example.weis.databinding.FragmentPlayBinding
 import com.example.weis.modals.Goal
 import com.example.weis.modals.User
 import com.example.weis.utils.StoreUser
+import com.example.weis.viewModel.SharedViewModel
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
@@ -33,6 +35,7 @@ class PlayFragment(private val goal : Goal? = null) : Fragment() {
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var dbrefUser : DocumentReference
     private var user : User? = null
+    private lateinit var sharedViewModel: SharedViewModel
 
     //list of musics
     private val musicList = mapOf(
@@ -58,6 +61,9 @@ class PlayFragment(private val goal : Goal? = null) : Fragment() {
 
         dbrefUser = FirebaseFirestore.getInstance().collection("User").document(user!!.email)
         val dbrefGoal = dbrefUser.collection("Goals")
+
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+
         //initializing the media player
         mediaPlayer = MediaPlayer.create(context, R.raw.black_hole)
         mediaPlayer.isLooping = true
@@ -78,8 +84,8 @@ class PlayFragment(private val goal : Goal? = null) : Fragment() {
         if(goal != null){
             binding.textGoalComp.text = goal.goal
             binding.stopwatch.visibility = View.GONE
-            binding.textTime.text = "${goal.duration} : 00"
-            startOrResumeTimer(goal.duration * 60 * 1000)
+            binding.textTime.text = "${goal.duration/60} : 00"
+            startOrResumeTimer(goal.duration * 1000 + 1000)
         }else{
             binding.textGoalComp.visibility = View.GONE
             binding.textTime.visibility = View.GONE
@@ -144,19 +150,24 @@ class PlayFragment(private val goal : Goal? = null) : Fragment() {
 
         }
 
-
+        //button to finish a goal or complete listening
         binding.btnFinishGoal.setOnLongClickListener{
+            stopMusic()
             if(goal != null){
                 dbrefGoal.document(goal.id.toString()).update(mapOf("State" to "incomplete"))
-                user?.hrsOfFocus = user!!.hrsOfFocus?.plus((goal.duration - timeRemaining) / 1000)
-                dbrefUser.update(mapOf("hrsOfFocus" to  user?.hrsOfFocus))
+                Log.d("goal time","${(goal.duration * 1000- timeRemaining) / 1000} ")
+                user?.secOfFocus = user!!.secOfFocus?.plus((goal.duration * 1000- timeRemaining) / 1000)
+                    ?: (goal.duration - timeRemaining)
+                dbrefUser.update(mapOf("secOfFocus" to  user?.secOfFocus))
                 StoreUser.saveData(user!!, requireActivity())
+                sharedViewModel.updateUser(user!!)
             }else{
-                user?.hrsOfFocus = (SystemClock.elapsedRealtime() - binding.stopwatch.base) / 1000
-                dbrefUser.update(mapOf("hrsOfFocus" to user?.hrsOfFocus))
+                Log.d("stopwatch", (user!!.secOfFocus?.plus((SystemClock.elapsedRealtime() - binding.stopwatch.base) / 1000)).toString())
+                user?.secOfFocus = user!!.secOfFocus?.plus((SystemClock.elapsedRealtime() - binding.stopwatch.base) / 1000)
+                dbrefUser.update(mapOf("secOfFocus" to user?.secOfFocus))
                 StoreUser.saveData(user!!, requireActivity())
+                sharedViewModel.updateUser(user!!)
             }
-            stopMusic()
             parentFragmentManager.popBackStack()
                 true
         }
@@ -175,9 +186,12 @@ class PlayFragment(private val goal : Goal? = null) : Fragment() {
                 binding.textTime.text = "00:00"
                 binding.imgBtnPlayPause.setImageResource(R.drawable.ic_play)
                 stopMusic()
-                user?.tasksDone = user?.tasksDone?.plus(1)
-                dbrefUser.update(mapOf("taskedCompleted" to user?.tasksDone))
+                user?.secOfFocus = user!!.secOfFocus?.plus(goal!!.duration)?: (goal!!.duration)
+                user?.tasksDone = user?.tasksDone?.plus(1) ?: 1
+                dbrefUser.update(mapOf("tasksDone" to user?.tasksDone, "secOfFocus" to user?.secOfFocus))
                 StoreUser.saveData(user!!, requireActivity())
+                sharedViewModel.updateUser(user!!)
+
                 val newFragment = GoalFinishedFragment()
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragContFocus, newFragment)

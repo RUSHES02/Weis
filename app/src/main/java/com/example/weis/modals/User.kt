@@ -5,6 +5,6 @@ data class User(
     val email: String,
     val password: String,
     var picture: String?,
-    var hrsOfFocus: Long? = 0,
+    var secOfFocus: Long? = 0,
     var tasksDone: Long? = 0
 )

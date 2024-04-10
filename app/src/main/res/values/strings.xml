@@ -17,7 +17,7 @@
     <string name="with_google">with google</string>
 
     <string name="concat">%1$s %2$s</string>
-    <string name="greet">Hi, %2$s</string>
+    <string name="greet">Hi, %1$s</string>
     <string name="time_focused">%1$s Focused</string>
     <string name="task_done">Tasks Done</string>
     <string name="web_client_id">878414644377-58r8hrqe58ve7rmv4piljattuuct1b6a.apps.googleusercontent.com</string>

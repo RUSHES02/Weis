@@ -68,7 +68,7 @@ class GoalSetDialogFragment : DialogFragment() {
                         hour = binding.timePickerGoal.hour,
                         minute = binding.timePickerGoal.minute
                     ),
-                    duration = (binding.numPickerSetTimer.value).toLong(),
+                    duration = (binding.numPickerSetTimer.value).toLong() * 60,
                     timestamp = DateTimeEpoch
                         .dateToEpochTime("${binding.datePickerGoal.dayOfMonth} " +
                                 "${binding.datePickerGoal.month} " +

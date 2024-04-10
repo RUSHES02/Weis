@@ -82,6 +82,10 @@ class MainContainerActivity : AppCompatActivity(){
                 }else{
                     binding.cardTabLay.visibility = View.VISIBLE
                 }
+                if(tab?.position == 1){
+                    val fragment = HomeFragment()
+//                    fragment.setUiComponents(this@MainContainerActivity)
+                }
             }
 
             //when a tab is unselected

@@ -38,13 +38,13 @@
         app:layout_constraintGuide_percent="0.4" />
 
     <eightbitlab.com.blurview.BlurView
+        android:id="@+id/blurView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imgTop">
-
 
 
     </eightbitlab.com.blurview.BlurView>
@@ -125,7 +125,7 @@
         app:layout_constraintStart_toStartOf="@+id/gdProfileLeft"
         app:layout_constraintTop_toBottomOf="@+id/imgTop" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAllTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintTop_toTopOf="@+id/gdProfileMid" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnThisWeek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -157,14 +157,16 @@
         app:layout_constraintEnd_toStartOf="@+id/gdProfileRight"
         app:layout_constraintTop_toTopOf="@+id/gdProfileMid" />
 
-    <CalendarView
+    <com.applandeo.materialcalendarview.CalendarView
         android:id="@+id/calendarView"
         style="@android:style/Widget.DeviceDefault.Light.CalendarView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:dateTextAppearance="@style/TextAppearance.AppCompat.Body2"
         android:selectedDateVerticalBar="@drawable/bg_screen_grad"
+        android:selectedWeekBackgroundColor="@color/primaryColor"
         android:weekDayTextAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintBottom_toBottomOf="@+id/blurView"
         app:layout_constraintEnd_toStartOf="@+id/gdProfileRight"
         app:layout_constraintStart_toStartOf="@+id/gdProfileLeft"
         app:layout_constraintTop_toTopOf="@+id/gdProfileMid2" />
