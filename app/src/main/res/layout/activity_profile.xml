@@ -162,11 +162,12 @@
         style="@android:style/Widget.DeviceDefault.Light.CalendarView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:dateTextAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:selectedDateVerticalBar="@drawable/bg_screen_grad"
-        android:selectedWeekBackgroundColor="@color/primaryColor"
-        android:weekDayTextAppearance="@style/TextAppearance.AppCompat.Body2"
-        app:layout_constraintBottom_toBottomOf="@+id/blurView"
+        app:highlightedDaysLabelsColor="@color/accentColor"
+        app:headerColor="@color/white"
+        app:headerLabelColor="@color/textColor"
+        app:forwardButtonSrc="@drawable/ic_forward_filled"
+        app:previousButtonSrc="@drawable/ic_backward_filled"
+        app:todayLabelColor="@color/accentColor"
         app:layout_constraintEnd_toStartOf="@+id/gdProfileRight"
         app:layout_constraintStart_toStartOf="@+id/gdProfileLeft"
         app:layout_constraintTop_toTopOf="@+id/gdProfileMid2" />
@@ -182,6 +183,23 @@
         app:layout_constraintTop_toTopOf="@+id/textUsername"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_edit" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_button_enabled"
+        android:includeFontPadding="false"
+        android:minHeight="0dp"
+        android:padding="10dp"
+        android:text="@string/log_out"
+        android:gravity="center"
+        android:textColor="@color/greyLight"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gdProfileRight"
+        app:layout_constraintStart_toStartOf="@+id/gdProfileLeft"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardEditName"

@@ -28,5 +28,6 @@
     <string name="long_press_to_complete_goal">Long Press to Complete Goal</string>
     <string name="progress_this_week">Progress this week:</string>
     <string name="let_s_focus">Let\'s Focus!</string>
+    <string name="log_out">Log Out</string>
 
 </resources>

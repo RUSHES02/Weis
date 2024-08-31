@@ -62,11 +62,14 @@ class GoalsFragment : Fragment(), DialogClickListener {
                         goal = data["name"].toString(),
                         duration = data["duration"] as Long,
                         timestamp = data["timestamp"] as Long,
+
                     )
                     val (date, time)= DateTimeEpoch.epochTimeToDate(goal.timestamp!!).split(",")
                     goal.date = date
                     goal.time = time
+//                    if(data["State"].toString() == null) {
                     goals.add(goal)
+//                    }
                     Log.d("goals", goals.toString())
                     goals.sortBy { it.timestamp }
                     goalsAdapter.saveData(goals)
