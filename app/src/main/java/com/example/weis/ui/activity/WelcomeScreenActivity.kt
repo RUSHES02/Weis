@@ -28,14 +28,18 @@ class WelcomeScreenActivity : AppCompatActivity() {
 
         //setting the welcome page according to hte new or existing user
         val intent = if(auth != null){
+            //if the user exists
             binder.btnNext.visibility = View.GONE
             Intent(this, MainContainerActivity::class.java)
         }else{
+            //if the user is a new user
+            binder.btnNext.visibility = View.VISIBLE
             Intent(this, RegLoginContActivity::class.java)
         }
 
+        //navigating to the page accordingly with i sec delay
         Handler().postDelayed({
-            if(binder.btnNext.visibility == View.GONE){
+            if(auth != null){
                 startActivity(intent)
                 finish()
             }else{

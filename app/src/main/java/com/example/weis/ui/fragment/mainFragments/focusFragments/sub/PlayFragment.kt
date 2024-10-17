@@ -157,7 +157,7 @@ class PlayFragment(private val goal : Goal? = null) : Fragment() {
                 dbrefGoal.document(goal.id.toString()).update(mapOf("State" to "incomplete"))
                 Log.d("goal time","${(goal.duration * 1000- timeRemaining) / 1000} ")
                 user?.secOfFocus = user!!.secOfFocus?.plus((goal.duration * 1000- timeRemaining) / 1000)
-                    ?: ((goal.duration - timeRemaining) / 1000)
+                    ?: (goal.duration - timeRemaining)
                 dbrefUser.update(mapOf("secOfFocus" to  user?.secOfFocus))
                 StoreUser.saveData(user!!, requireActivity())
                 sharedViewModel.updateUser(user!!)

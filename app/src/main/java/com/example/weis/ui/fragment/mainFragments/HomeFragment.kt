@@ -21,13 +21,13 @@ import com.example.weis.modals.User
 import com.example.weis.ui.activity.ProfileActivity
 import com.example.weis.viewModel.SharedViewModel
 import com.google.gson.Gson
-import java.text.DecimalFormat
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding : FragmentHomeBinding
     private lateinit var user : User
     private lateinit var sharedPreferences : SharedPreferences
+    private lateinit var mediaPlayer: MediaPlayer
     private lateinit var sharedViewModel: SharedViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,6 +66,11 @@ class HomeFragment : Fragment() {
 
         }
 
+        binding.cardCenterIC.setOnClickListener{
+            mediaPlayer = MediaPlayer.create(context, R.raw.black_hole)
+            mediaPlayer.start()
+        }
+
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
 
         sharedViewModel.newUser.observe(viewLifecycleOwner) { newUser ->
@@ -79,10 +84,10 @@ class HomeFragment : Fragment() {
                 binding.txtHrsFoc.text = getString(R.string.time_focused, "sec")
             }else if(newUser.secOfFocus!! in 61..3600){
                 Log.d("time in min", String.format("%.1f", (newUser.secOfFocus!! / 60.0F)))
-                binding.txtHrsFocNo.text = (newUser.secOfFocus!! / 60).toString()
+                binding.txtHrsFocNo.text = (newUser.secOfFocus!!.toFloat() / 60.0F).toString()
                 binding.txtHrsFoc.text = getString(R.string.time_focused, "mins")
             }else{
-                binding.txtHrsFocNo.text = (newUser.secOfFocus!! / 3600).toString()
+                binding.txtHrsFocNo.text = String.format("%.1f",(newUser.secOfFocus!! / 3600.0F))
                 binding.txtHrsFoc.text = getString(R.string.time_focused, "hrs")
             }
         }
@@ -105,7 +110,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun setUiComponents(context : Context = requireActivity()){
+    fun setUiComponents(context : Context = requireActivity()){
         //fetching the saved user from shared preference
 
         val sharedPref = context.getSharedPreferences("User", Context.MODE_PRIVATE)
@@ -117,15 +122,14 @@ class HomeFragment : Fragment() {
         binding.txtUsername.text = getString(R.string.greet, user.name?.split(" ")?.get(0))
         binding.txtTaskDoneNo.text = (user.tasksDone ?: 0).toString()
 
-        val df = DecimalFormat("#.#")
         if(user.secOfFocus!! < 60){
             binding.txtHrsFocNo.text = user.secOfFocus.toString()
             binding.txtHrsFoc.text = getString(R.string.time_focused, "sec")
         }else if(user.secOfFocus!! in 61..3600){
-            binding.txtHrsFocNo.text = (user.secOfFocus!! / 60).toString()
+            binding.txtHrsFocNo.text = String.format("%.1f",(user.secOfFocus!!/ 60.0F))
             binding.txtHrsFoc.text = getString(R.string.time_focused, "mins")
         }else{
-            binding.txtHrsFocNo.text = (user.secOfFocus!!/ 3600).toString()
+            binding.txtHrsFocNo.text = String.format("%.1f",(user.secOfFocus!! / 3600.0F))
             binding.txtHrsFoc.text = getString(R.string.time_focused, "hrs")
         }
     }

@@ -45,9 +45,9 @@ class GoalsRecyclerAdapter : RecyclerView.Adapter<GoalsRecyclerAdapter.GoalsHold
         private var btnStart : Button = itemView.findViewById(R.id.btnStart)
         private val textGoalDateTime : TextView = itemView.findViewById(R.id.textGoalDatetime)
 
-        fun bind (goal: Goal, position: Int){
+        fun bind (goal : Goal){
             textGoalTitle.text = goal.goal
-            textGoalDur.text = (goal.duration / 60).toString() + " m"
+            textGoalDur.text = goal.duration.toString() + " m"
             textGoalDateTime.text = "${goal.date}   ${goal.time}"
             btnStart.visibility = View.GONE
 
@@ -67,7 +67,6 @@ class GoalsRecyclerAdapter : RecyclerView.Adapter<GoalsRecyclerAdapter.GoalsHold
             }
             btnStart.setOnClickListener{
                 Log.d("Start Button","clicked")
-//                differ.currentList.removeAt(position)
                 onStartClick?.invoke(goal)
             }
             itemView.setOnClickListener{
@@ -100,7 +99,7 @@ class GoalsRecyclerAdapter : RecyclerView.Adapter<GoalsRecyclerAdapter.GoalsHold
     override fun onBindViewHolder(holder: GoalsHolder, position: Int) {
         val goal = differ.currentList[position]
         Log.d("in adapter", "yes")
-        holder.bind(goal, position)
+        holder.bind(goal)
     }
 
     var onItemClick :((Goal) -> Unit)? = null

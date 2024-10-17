@@ -122,4 +122,45 @@ class RegistrationFragment : Fragment() {
                 Log.d("Auth", "failed")
             }
     }
+
+//    private fun signIn() {
+//        val signInIntent = mGoogleSignInClient.signInIntent
+//        startActivityForResult(signInIntent, RC_SIGN_IN)
+//    }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (requestCode == RC_SIGN_IN) {
+//            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+//            handleSignInResult(task)
+//        }
+//    }
+//
+//    private fun handleSignInResult(completedTask: Task<com.google.android.gms.auth.api.signin.GoogleSignInAccount>) {
+//        try {
+//            val account = completedTask.getResult(ApiException::class.java)
+//            // Signed in successfully, handle account data (e.g., send it to your server)
+//            updateUI(account)
+//        } catch (e: ApiException) {
+//            // The ApiException status code indicates the detailed failure reason.
+//            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+//            Log.w("google", "signInResult:failed code=" + e.statusCode)
+//            updateUI(null)
+//        }
+//    }
+//
+//    private fun updateUI(account: com.google.android.gms.auth.api.signin.GoogleSignInAccount?) {
+//        // Handle the UI update after sign-in (e.g., update UI elements, navigate to the next screen)
+//        if (account != null) {
+//            // Successful sign-in, you can use account information
+//            val displayName = account.displayName
+//            val email = account.email
+//            // ...
+//
+//            Log.d("creds", "$displayName, $email")
+//        } else {
+//            // Sign-in failed
+//        }
+//    }
 }

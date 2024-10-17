@@ -20,9 +20,10 @@ import com.example.weis.utils.DialogClickListener
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
+import java.time.LocalDateTime
 
 
-class GoalsFragment : Fragment(), DialogClickListener {
+class   GoalsFragment : Fragment(), DialogClickListener {
 
     private lateinit var binding : FragmentGoalsBinding
     private val goals =  ArrayList<Goal>()
@@ -43,7 +44,8 @@ class GoalsFragment : Fragment(), DialogClickListener {
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("User", Context.MODE_PRIVATE)
         val userDataJson = sharedPreferences.getString("user", null)
         val user = userDataJson?.let { Gson().fromJson(it, User::class.java)}
-
+        val time: LocalDateTime
+        
         goalsAdapter.saveData(goals)
         binding.recyclerGoals.layoutManager = LinearLayoutManager(context)
         binding.recyclerGoals.adapter = goalsAdapter
@@ -70,6 +72,7 @@ class GoalsFragment : Fragment(), DialogClickListener {
 //                    if(data["State"].toString() == null) {
                     goals.add(goal)
 //                    }
+                    
                     Log.d("goals", goals.toString())
                     goals.sortBy { it.timestamp }
                     goalsAdapter.saveData(goals)

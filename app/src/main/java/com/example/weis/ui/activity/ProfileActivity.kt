@@ -18,19 +18,17 @@ import com.example.weis.databinding.ActivityProfileBinding
 import com.example.weis.modals.User
 import com.example.weis.utils.CheckNetwork
 import com.example.weis.utils.StoreUser
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
 
-
 class ProfileActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityProfileBinding
-    private lateinit var storageRef: StorageReference
-    private lateinit var dbRef: CollectionReference
+    private lateinit var binding : ActivityProfileBinding
+    private lateinit var storageRef : StorageReference
+    private lateinit var dbRef : CollectionReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,15 +37,14 @@ class ProfileActivity : AppCompatActivity() {
 
         window.statusBarColor = ContextCompat.getColor(this, R.color.primaryColor)
 
-        val sharedPreferences: SharedPreferences =
-            this.getSharedPreferences("User", Context.MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences = this.getSharedPreferences("User", Context.MODE_PRIVATE)
         val userDataJson = sharedPreferences.getString("user", null)
-        val user = userDataJson?.let { Gson().fromJson(it, User::class.java) }
+        val user = userDataJson?.let { Gson().fromJson(it, User::class.java)}
 
         binding.editTextEditName.visibility = View.GONE
 
         if (user != null) {
-            if (user.picture != null) {
+            if (user.picture != null){
                 Log.d("Saved User", "$user")
                 Glide.with(this)
                     .load(user.picture)
@@ -59,27 +56,23 @@ class ProfileActivity : AppCompatActivity() {
             binding.textUsername.text = user.name
         }
 
+
+
+
         storageRef = FirebaseStorage.getInstance().getReference("Images")
         dbRef = FirebaseFirestore.getInstance().collection("User")
 
-        binding.icEditName.setOnClickListener {
-            if (CheckNetwork.isInternetAvailable(this)) {
+
+        binding.icEditName.setOnClickListener{
+            if(CheckNetwork.isInternetAvailable(this)) {
                 binding.editTextEditName.visibility = View.VISIBLE
-            } else {
+            }else{
                 Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show()
             }
         }
 
-        binding.btnLogout.setOnClickListener{
-            FirebaseAuth.getInstance().signOut()
-            sharedPreferences.edit().clear().apply()
-            Toast.makeText(this, getString(R.string.log_out), Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this,RegLoginContActivity::class.java))
-            finish()
-        }
-
-        binding.constraintProfile.setOnClickListener {
-            if (binding.editTextEditName.visibility == View.VISIBLE) {
+        binding.constraintProfile.setOnClickListener{
+            if(binding.editTextEditName.visibility == View.VISIBLE){
                 binding.textUsername.text = binding.editTextEditName.text
                 binding.editTextEditName.visibility = View.GONE
                 if (user != null) {
@@ -129,16 +122,16 @@ class ProfileActivity : AppCompatActivity() {
         }
 
 
-        binding.imgUser.setOnClickListener {
-            if (CheckNetwork.isInternetAvailable(this)) {
+        binding.imgUser.setOnClickListener{
+            if(CheckNetwork.isInternetAvailable(this)){
                 pickImage.launch("image/*")
-            } else {
+            }else{
                 Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show()
             }
 
         }
 
-        binding.imgBtnBack.setOnClickListener {
+        binding.imgBtnBack.setOnClickListener{
             super.onBackPressed()
         }
     }
@@ -147,4 +140,5 @@ class ProfileActivity : AppCompatActivity() {
         Intent()
         return super.getOnBackInvokedDispatcher()
     }
+
 }
