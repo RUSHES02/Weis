@@ -8,13 +8,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.weis.alarm.GoalScheduler
 import com.example.weis.databinding.FragmentGoalSetDialogBinding
 import com.example.weis.modals.Goal
+import com.example.weis.modals.GoalNotification
 import com.example.weis.utils.DateTimeEpoch
 import com.example.weis.utils.DialogClickListener
 import com.example.weis.utils.ScreenUtils
 import com.example.weis.viewModel.GoalViewModel
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 
@@ -35,7 +38,7 @@ class GoalSetDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         ScreenUtils.initScreenUtils(requireContext().applicationContext)
-
+        val goalScheduler = GoalScheduler(requireContext())
         // Get the screen width and height
         val screenWidth = ScreenUtils.getScreenWidth()
         val screenHeight = ScreenUtils.getScreenHeight()
@@ -54,7 +57,13 @@ class GoalSetDialogFragment : DialogFragment() {
 
         binding.btnSetGoal.setOnClickListener{
             Log.d("Date", "${binding.datePickerGoal.dayOfMonth}/${binding.datePickerGoal.month}/${binding.datePickerGoal.year%100}")
-
+            val timeEpoch = DateTimeEpoch
+                .dateToEpochTime(
+                    "${binding.datePickerGoal.dayOfMonth} " +
+                        "${binding.datePickerGoal.month} " +
+                        "${binding.datePickerGoal.year} " +
+                        "${binding.timePickerGoal.hour} " +
+                        "${binding.timePickerGoal.minute} 00", "dd MM yyyy HH mm ss")
             if (validateGoalDetails()){
                 val goalViewModel = ViewModelProvider(this)[GoalViewModel::class.java]
                 val goal = Goal(
@@ -69,14 +78,22 @@ class GoalSetDialogFragment : DialogFragment() {
                         minute = binding.timePickerGoal.minute
                     ),
                     duration = (binding.numPickerSetTimer.value).toLong() * 60,
-                    timestamp = DateTimeEpoch
-                        .dateToEpochTime("${binding.datePickerGoal.dayOfMonth} " +
-                                "${binding.datePickerGoal.month} " +
-                                "${binding.datePickerGoal.year} " +
-                                "${binding.timePickerGoal.hour} " +
-                                "${binding.timePickerGoal.minute} 00", "dd MM yyyy HH mm ss")
+                    timestamp = timeEpoch
                 )
-
+                val formatter = DateTimeFormatter.ofPattern("dd MM yyyy HH mm ss")
+                val goalNotification = GoalNotification(
+                    time = LocalDateTime.parse(
+                        "${binding.datePickerGoal.dayOfMonth} " +
+                        "${binding.datePickerGoal.month} " +
+                        "${binding.datePickerGoal.year} " +
+                        "${binding.timePickerGoal.hour} " +
+                        "${binding.timePickerGoal.minute} 00",
+                        formatter
+                    ),
+                    message = binding.editTextGoalTittle.text.toString()
+                )
+                
+                goalNotification.let(goalScheduler::schedule)
                 listener?.onDataPassed(goal)
                 // Dismiss the dialog fragment
                 dismiss()
